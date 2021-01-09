@@ -13,7 +13,6 @@
 </style>
 
 <body>
-
     <div class="newspaper">
         <p style="font-style: italic; text-align: left;">HAPPYNEWYEAR!<br>
             안녕하세요. 안규미입니다. <br>
@@ -51,13 +50,6 @@
         function init() {
 
             const container = document.createElement('div');
-
-            // *-- bgcolor --* 
-            const color1 = new THREE.Color();
-            const color2 = new THREE.Color('#000');
-            const color3 = new THREE.Color('#0000cc');
-            const color4 = new THREE.Color('#faff00');
-            const color5 = new THREE.Color('transparent');
 
             // *-- texture --* 
             // instantiate a loader
@@ -122,9 +114,12 @@
 
                     const envMap = pmremGenerator.fromEquirectangular(texture).texture;
 
-                    //BGColor
-                    scene.background = color1;
+                    // scene
+                    scene = new THREE.Scene();
+                    scene.background = new THREE.Color(0xcce0ff);
+                    scene.fog = new THREE.Fog(0xcce0ff, 500, 10000);
 
+                    // environment
                     scene.environment = envMap;
 
                     texture.dispose();
