@@ -6,16 +6,15 @@
  */
 
 html {
-    background: white;
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }
 
 body {
-    background: white;
     /*background: linear-gradient(180deg, #00ff8a, #008aff);*/
-    color: #555555;
+    background-color: #cce0ff;
+    color: gray;
     font-family: 'Noto Serif KR', serif;
     font-size: 1.2em;
     line-height: 1.5;
@@ -134,29 +133,6 @@ kbd {
     z-index: 1;
     /* TODO Solve this in HTML */
 }
-
-.newspaper2 {
-    width: 100%;
-    column-count: 1;
-    column-gap: 0px;
-    column-rule-style: solid;
-    column-rule-width: 2px;
-    z-index: 1;
-
-    position: absolute;
-    top: 0px;
-    padding: 0em 0em 0em;
-    text-align: left;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    pointer-events: none;
-    z-index: -1;
-    /* TODO Solve this in HTML */
-}
-
-
 
 /* Clear floats after the columns */
 .row:after {
