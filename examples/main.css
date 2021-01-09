@@ -1,0 +1,218 @@
+/*!
+ * Primer-core
+ * http://primer.github.io
+ *
+ * Released under MIT license. Copyright (c) 2019 GitHub Inc.
+ */
+
+html {
+    background: white;
+    font-family: sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    background: white;
+    /*background: linear-gradient(180deg, #00ff8a, #008aff);*/
+    color: #555555;
+    font-family: 'Noto Serif KR', serif;
+    font-size: 1.2em;
+    line-height: 1.5;
+    margin: 0 auto;
+    padding: 0em 0em 0em;
+}
+
+
+h1 {
+    font-family: 'Noto Serif KR', serif;
+    padding: 0em 0em 0em;
+}
+
+h2 {
+    font-family: 'Noto Serif KR', serif;
+    padding: 0em 0em 0em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Noto Serif KR', serif;
+    font-weight: 600;
+    line-height: 0;
+    padding: 0em 0em 0em;
+    font-weight: 100;
+}
+
+mark {
+    background-color: #ff0;
+}
+
+b,
+strong {
+    font-weight: 600;
+}
+
+textarea {
+    overflow: auto
+}
+
+samp {
+    display: none;
+}
+
+hr {
+    border: 1px solid transparent;
+    padding: 0em 0em 0em;
+    margin: auto;
+}
+
+p {
+    font-family: 'Noto Serif KR', serif;
+    margin: auto;
+    padding: 0em 0em 0em;
+    text-align: right;
+}
+
+a {
+    background-color: transparent;
+}
+
+a:link {
+    text-decoration: none;
+    color: #008aff;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #008aff;
+}
+
+a:hover {
+    font-style: italic
+}
+
+a:active {
+    color: #008aff;
+}
+
+kbd {
+    display: inline-block;
+    font-family: alliance, sans-serif;
+    line-height: 10px;
+    color: #444d56;
+    vertical-align: middle;
+    background-color: #fafbfc;
+    border: solid 1px #d1d5da;
+    border-bottom-color: #d1d5da;
+    border-radius: 3px;
+    -webkit-box-shadow: inset 0 -1px 0 #d1d5da;
+    box-shadow: inset 0 -1px 0 #d1d5da
+}
+
+
+.newspaper {
+    width: 100%;
+    column-count: 1;
+    column-gap: 0px;
+    column-rule-style: solid;
+    column-rule-width: 2px;
+    z-index: 1;
+
+    position: absolute;
+    top: 0px;
+    padding: 0em 0em 0em;
+    text-align: left;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+    /* TODO Solve this in HTML */
+}
+
+.newspaper2 {
+    width: 100%;
+    column-count: 1;
+    column-gap: 0px;
+    column-rule-style: solid;
+    column-rule-width: 2px;
+    z-index: 1;
+
+    position: absolute;
+    top: 0px;
+    padding: 0em 0em 0em;
+    text-align: left;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    z-index: -1;
+    /* TODO Solve this in HTML */
+}
+
+
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* At mobile display */
+@media screen and (max-width: 1242px) {
+
+    body {
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.06);
+        font-family: 'Noto Serif KR', serif;
+        font-size: 2.5em;
+        line-height: 1.0em;
+        margin: 0 auto;
+        padding: 0em 0em 0em;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Noto Serif KR', serif;
+        font-weight: 600;
+        line-height: 0;
+        padding: 0em 0em 0em;
+        text-align: center;
+    }
+
+    p {
+        font-family: 'Noto Serif KR', serif;
+        padding: 0em 0em 0em;
+        line-height: 1.5em;
+        margin: 0 auto;
+        font-weight: 100;
+        font-size: .5em;
+    }
+
+    .newspaper {
+        width: 100%;
+        column-count: 1;
+        column-gap: 0px;
+        column-rule-style: solid;
+        column-rule-width: 2px;
+    }
+
+    footer {
+        text-align: center;
+        margin: 0em auto;
+    }
+
+    hr {
+        border: 2px solid transparent;
+    }
+}

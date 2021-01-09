@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>glTF loader test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="main.css">
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300&display=swap');
+</style>
+
+<body>
+
+    <div class="newspaper">
+        <p style="font-style: italic; text-align: left;">HAPPYNEWYEAR!<br>
+            안녕하세요. 안규미입니다. <br>
+            저는 올해 웹 개발과 3D 실시간 렌더링 연구에 열중할 계획입니다. <br>
+            기술은 물론 예술성과 작품성에도 정성을 기울여 좋은 콘텐츠를 보여드릴 수 있도록 하겠습니다. <br>
+            새해 복 많이 받으세요. 감사합니다. <br>
+            ⓒ 安奎美. ALL RIGHTS RESERVED.
+        </p>
+
+    </div>
+
+
+    <script type="module">
+        import * as THREE from '../build/three.module.js';
+
+        import {
+            OrbitControls
+        } from './jsm/controls/OrbitControls.js';
+        import {
+            GLTFLoader
+        } from './jsm/loaders/GLTFLoader.js';
+        import {
+            RGBELoader
+        } from './jsm/loaders/RGBELoader.js';
+        import {
+            RoughnessMipmapper
+        } from './jsm/utils/RoughnessMipmapper.js';
+
+        let camera, scene, renderer, mesh;
+
+        init();
+        animate();
+        render();
+
+        function init() {
+
+            const container = document.createElement('div');
+
+            // *-- bgcolor --* 
+            const color1 = new THREE.Color();
+            const color2 = new THREE.Color('#000');
+            const color3 = new THREE.Color('#0000cc');
+            const color4 = new THREE.Color('#faff00');
+            const color5 = new THREE.Color('transparent');
+
+            // *-- texture --* 
+            // instantiate a loader
+            const loader = new THREE.TextureLoader();
+
+            /*
+            // *-- image --*
+            const loader = new THREE.ImageLoader();
+
+            // load a resource
+                       loader.load(
+                       // resource URL
+                       ' ',
+
+                       // onLoad callback
+                       function(image) {
+                       // use the image, e.g. draw part of it on a canvas
+                       const canvas = document.createElement('canvas');
+                       const context = canvas.getContext('2d');
+                       context.drawImage(image, 100, 100);
+                       },
+
+                       // onProgress callback currently not supported
+                       undefined,
+
+                       // onError callback
+                       function(err) {
+                       console.error('An error happened.');
+                       }
+                       );
+                       
+            */
+
+            // *-- audio --* 
+            // create an AudioListener and add it to the camera
+            const listener = new THREE.AudioListener();
+            // create a global audio source
+            const sound = new THREE.Audio(listener);
+            // load a sound and set it as the Audio object's buffer
+            const audioLoader = new THREE.AudioLoader();
+            audioLoader.load('https://madfield.github.io/newyear2021/examples/audio/Dearest.mp3', function(buffer) {
+                sound.setBuffer(buffer);
+                sound.setLoop(true);
+                sound.setVolume(0.5);
+                sound.play();
+            });
+
+            document.body.appendChild(container);
+
+            // *-- camera --*
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.25, 20);
+            camera.position.set(-1.8, 0.6, -6.7);
+
+            scene = new THREE.Scene();
+
+            const texture = new THREE.TextureLoader().load('textures/crate.gif');
+
+            new RGBELoader()
+                .setDataType(THREE.UnsignedByteType)
+                .setPath('textures/equirectangular/')
+                .load('quattro_canti_4k.hdr', function(texture) {
+
+                    const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+
+                    //BGColor
+                    scene.background = color1;
+
+                    scene.environment = envMap;
+
+                    texture.dispose();
+                    pmremGenerator.dispose();
+
+                    render();
+
+                    // Model(.gltf or .glb format is available.)
+
+                    // use of RoughnessMipmapper is optional
+                    const roughnessMipmapper = new RoughnessMipmapper(renderer);
+
+                    const loader = new GLTFLoader().setPath('models/gltf/white_glass_buffalo/glTF/');
+                    loader.load('white_glass_buffalo_metal_01.glb', function(gltf) {
+
+                        gltf.scene.traverse(function(child) {
+
+                            if (child.isMesh) {
+
+                                // TOFIX RoughnessMipmapper seems to be broken with WebGL 2.0
+                                // roughnessMipmapper.generateMipmaps( child.material );
+
+                            }
+
+                        });
+
+                        scene.add(gltf.scene);
+
+                        roughnessMipmapper.dispose();
+
+                        render();
+
+                    });
+
+                });
+
+            renderer = new THREE.WebGLRenderer({
+                antialias: true
+            });
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            container.appendChild(renderer.domElement);
+
+            const pmremGenerator = new THREE.PMREMGenerator(renderer);
+            pmremGenerator.compileEquirectangularShader();
+
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.addEventListener('change', render); // use if there is no animation loop
+            controls.minDistance = 2;
+            controls.maxDistance = 10;
+
+            //Position
+            controls.target.set(0, 0, 0);
+            controls.update();
+
+            window.addEventListener('resize', onWindowResize, false);
+
+        }
+
+        function onWindowResize() {
+
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            render();
+
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            scene.rotation.x += 0;
+        }
+
+        function render() {
+            renderer.render(scene, camera);
+        }
+    </script>
+</body></html>
